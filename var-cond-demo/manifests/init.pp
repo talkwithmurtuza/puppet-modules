@@ -1,7 +1,7 @@
-class var-demo
+class var-cond-demo
 {
 
-$osversion = 'redhat7'
+$osversion = 'redha7'
 
 if $osversion == 'redhat6'
 {
@@ -18,7 +18,7 @@ if $osversion == 'redhat6'
     file {'/etc/ntp.conf':
                 ensure => file,
                 mode   => 0644,
-                source => 'puppet:///module/var-demo/ntpd.conf',
+                source => 'puppet:///modules/var-cond-demo/ntp.conf',
                 before => Service['ntpd'],            }
 
 }
@@ -31,13 +31,13 @@ else
         service {'chronyd':
                 ensure  => running,
                 require => [
-                            Package['chronyd'],
+                            Package['chrony'],
                             File['/etc/chrony.conf'],
                                   ],  }
-        file {'/etc/ntp.conf':
+        file {'/etc/chrony.conf':
                 ensure => file,
                 mode   => 0644,
-                source => 'puppet:///module/var-demo/chrony.conf',
+                source => 'puppet:///modules/var-cond-demo/chrony.conf',
                 before => Service['chronyd'],      }
 }
 
